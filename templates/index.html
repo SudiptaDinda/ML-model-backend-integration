@@ -13,50 +13,5 @@
 </body>
 </html>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Upload Image</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="page-container">
-        <h1>Upload Rice Leaf Image</h1>
-        <form method="post" action="{{ url_for('predict_page') }}" enctype="multipart/form-data">
-            <div class="file-upload">
-                <input type="file" name="file" id="file-input" required accept="image/*">
-                <label for="file-input">Choose Image</label>
-            </div>
-            <button type="submit" class="nav-button">Predict Disease</button>
-        </form>
-    </div>
-</body>
-</html>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Prediction Result</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="page-container">
-        <h1>Prediction Result</h1>
-        
-        <div class="result-box">
-            <div class="image-container">
-                <img src="{{ image_path }}" alt="Uploaded Rice Leaf">
-            </div>
-            <div class="prediction-info">
-                <h2>Diagnosis: <span class="prediction">{{ prediction }}</span></h2>
-                <p>Confidence: {{ confidence }}%</p>
-            </div>
-        </div>
-        
-        <div class="action-buttons">
-            <a href="{{ url_for('upload_page') }}" class="nav-button">Try Another</a>
-            <a href="{{ url_for('start_page') }}" class="nav-button">Home</a>
-        </div>
-    </div>
-</body>
-</html>
+

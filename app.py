@@ -1,5 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for
-import pickle
+import os
+print("TEMPLATES FOUND:", os.listdir('templates'))
+from werkzeug.utils import secure_filename
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
+
 import numpy as np
 
 import tensorflow as tf
@@ -12,12 +17,12 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Load your ML model
-model = load_model('rice.h5')
+model  = load_model('rice.h5')
 CLASS_NAMES = ['Disease1', 'Disease2', 'Healthy']  # Update with your classes
 
 @app.route('/')
 def start_page():
-    return render_template('start.html')
+    return render_template('index.html')
 
 @app.route('/upload')
 def upload_page():
@@ -39,16 +44,18 @@ def predict_page():
         file.save(filepath)
         
         # Make prediction
-        img = image.load_img(filepath, target_size=(256, 256))
+        img = image.load_img(filepath, target_size=(224, 224))
         img_array = image.img_to_array(img)
+        print("After to_array:", img_array.shape)
         img_array = np.expand_dims(img_array, axis=0) / 255.0
+        print("Final input shape for model:", img_array.shape)
         
         pred = model.predict(img_array)
         predicted_class = CLASS_NAMES[np.argmax(pred[0])]
         confidence = round(float(np.max(pred[0])) * 100, 2)
         
         return render_template('predict.html', 
-                           image_path=filepath,
+                            image_path=url_for('static', filename='uploads/' + filename),
                            prediction=predicted_class,
                            confidence=confidence)
     

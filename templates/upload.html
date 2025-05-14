@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Image</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="page-container">
+        <h1>Upload Rice Leaf Image</h1>
+        <form method="post" action="{{ url_for('predict_page') }}" enctype="multipart/form-data">
+            <div class="file-upload">
+                <input type="file" name="file" id="file-input" required accept="image/*">
+                <label for="file-input">Choose Image</label>
+            </div>
+            <button type="submit" class="nav-button">Predict Disease</button>
+        </form>
+    </div>
+</body>
+</html>
